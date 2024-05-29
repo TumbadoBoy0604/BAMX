@@ -102,11 +102,6 @@ app.get('/data', (req, res) => {
     });
 });
 
-app.post('/dashboard', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/graph',
-    failureRedirect: '/login',
-    failureFlash: true
-}))
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
     try {
