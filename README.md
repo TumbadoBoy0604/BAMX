@@ -31,6 +31,9 @@ Puedes usar un git clone para clonar este repositorio a tu maquina en la ubicaci
 ### Configurar NodeJS
 Se deben instalar las dependencias de nodejs necesarias para correr la aplicacion
 
+Debes configurar tu archivo .env para que se conecte a la base de datos que quieres
+
+
 ### Administrar las bases de datos
 Necesitas poder utilizar y manipular bases de datos dentro de tu maquina con MySQL
 
