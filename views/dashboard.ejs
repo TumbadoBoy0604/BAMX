@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Spotify</title>
+    <link rel="stylesheet" href="/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="chart-text">
+    <div class="container">
+        <h1>Bienvenido al Dashboard de Spotify</h1>
+
+        <div class="chart-container">
+            <canvas id="myChartTop"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="myChartBottom"></canvas>
+        </div>
+    </div>
+
+    <footer class="footer">
+        &copy; 2024 Spotify Dashboard
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const textColor = getComputedStyle(document.body).getPropertyValue('--chart-text-color').trim();
+
+            fetch('/api/dashboard')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Datos recibidos:', data); // Mensaje de depuración
+                    mostrar(data, textColor);
+                })
+                .catch(error => console.error('Error en la operación fetch:', error));
+
+            const mostrar = (canciones, textColor) => {
+                const topSongs = canciones.slice(0, 10);
+                const bottomSongs = canciones.slice(10, 20);
+
+                console.log('Top Songs:', topSongs); // Mensaje de depuración
+                console.log('Bottom Songs:', bottomSongs); // Mensaje de depuración
+
+                const ctxTop = document.getElementById('myChartTop').getContext('2d');
+                const ctxBottom = document.getElementById('myChartBottom').getContext('2d');
+
+                const myChartTop = new Chart(ctxTop, {
+                    type: 'bar',
+                    data: {
+                        labels: topSongs.map(song => song.track_name),
+                        datasets: [{
+                            label: 'Top 10 Canciones con Más Streams',
+                            backgroundColor: ['#6bf1ab','#63d69f', '#438c6c', '#509c7f', '#1f794e', '#34444c', '#90CAF9', '#64B5F6', '#42A5F5', '#2196F3'],
+                            borderColor: ['black'],
+                            borderWidth: 1,
+                            data: topSongs.map(song => song.streams)
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    fontColor: textColor // Cambia el color del texto del eje y
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    fontColor: textColor // Cambia el color del texto del eje x
+                                }
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                fontColor: textColor // Cambia el color del texto de la leyenda
+                            }
+                        }
+                    }
+                });
+
+                const myChartBottom = new Chart(ctxBottom, {
+                    type: 'bar',
+                    data: {
+                        labels: bottomSongs.map(song => song.track_name),
+                        datasets: [{
+                            label: 'Bottom 10 Canciones con Menos Streams',
+                            backgroundColor: ['#f1ab6b','#d69f63', '#8c6c43', '#9c7f50', '#794e1f', '#444434', '#F9A890', '#F6B564', '#F5A542', '#F39621'],
+                            borderColor: ['black'],
+                            borderWidth: 1,
+                            data: bottomSongs.map(song => song.streams)
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    fontColor: textColor // Cambia el color del texto del eje y
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    fontColor: textColor // Cambia el color del texto del eje x
+                                }
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                fontColor: textColor // Cambia el color del texto de la leyenda
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<ul>
+<body class="dashboard">
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1>Spotify Songs Dashboard</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class="current"><a href="/dashboard">Home</a></li>
+                    <li><a href="/login">Logout</a></li>
+                    <li><a href="/graph">Graph</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <h1>Welcome, <%= user %>!</h1>
+        <h2>Spotify Songs Dashboard</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Track Name</th>
+                    <th>Artist(s) Name</th>
+                    <th>Artist Count</th>
+                    <th>Released Year</th>
+                    <th>Released Month</th>
+                    <th>Released Day</th>
+                    <th>In Spotify Playlists</th>
+                    <th>In Spotify Charts</th>
+                    <th>Streams</th>
+                    <th>In Apple Playlists</th>
+                    <th>BPM</th>
+                    <th>Key</th>
+                    <th>Mode</th>
+                    <th>Danceability %</th>
+                    <th>Valence %</th>
+                    <th>Energy %</th>
+                    <th>Acousticness %</th>
+                    <th>Instrumentalness %</th>
+                    <th>Liveness %</th>
+                    <th>Speechiness %</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.forEach(function(song) { %>
+                    <tr>
+                        <td><%= song.track_name %></td>
+                        <td><%= song['artist(s)_name'] %></td>
+                        <td><%= song.artist_count %></td>
+                        <td><%= song.released_year %></td>
+                        <td><%= song.released_month %></td>
+                        <td><%= song.released_day %></td>
+                        <td><%= song.in_spotify_playlists %></td>
+                        <td><%= song.in_spotify_charts %></td>
+                        <td><%= song.streams %></td>
+                        <td><%= song.in_apple_playlists %></td>
+                        <td><%= song.bpm %></td>
+                        <td><%= song.key %></td>
+                        <td><%= song.mode %></td>
+                        <td><%= song['danceability_%'] %></td>
+                        <td><%= song['valence_%'] %></td>
+                        <td><%= song['energy_%'] %></td>
+                        <td><%= song['acousticness_%'] %></td>
+                        <td><%= song['instrumentalness_%'] %></td>
+                        <td><%= song['liveness_%'] %></td>
+                        <td><%= song['speechiness_%'] %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

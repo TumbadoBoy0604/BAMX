@@ -39,7 +39,7 @@ initializePassport(
 );
 
 
-app.set('view-engine', 'ejs')
+app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use(flash())
 app.use(session({
@@ -58,7 +58,16 @@ const db = mysql.createConnection({
   host: process.env.DATABASE_HOST,
   user: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE
+  database: process.env.DATABASE,
+  port:3300
+})
+
+const dashboard = mysql.createConnection({ 
+  host: process.env.DATABASE_HOST,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: 'SpotifySongs',
+  port:3300
 })
 
 db.connect((error)=>{
@@ -78,7 +87,23 @@ app.use('/login', require('./routes/pages'))
 
 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
+    successRedirect: '/dashboard',
+    failureRedirect: '/login',
+    failureFlash: true
+}))
+app.get('/data', (req, res) => {
+    const query = 'SELECT released_month FROM popular_spotify_songs_2'; // Asegúrate de que este sea el nombre correcto de tu tabla
+    db.query(query, (err, results) => {
+        if (err) {
+            throw err;
+        }
+        const data = results.map(row => row.released_month);
+        res.json(data);
+    });
+});
+
+app.post('/dashboard', checkNotAuthenticated, passport.authenticate('local', {
+    successRedirect: '/graph',
     failureRedirect: '/login',
     failureFlash: true
 }))
@@ -130,9 +155,29 @@ function checkNotAuthenticated(req, res, next) {
     }
     next()
 }
+app.get('/api/dashboard', checkAuthenticated, (req, res) => {
+    const queryTop10 = 'SELECT * FROM popular_spotify_songs_2 ORDER BY streams DESC LIMIT 10';
+    const queryBottom10 = 'SELECT * FROM popular_spotify_songs_2 ORDER BY streams ASC LIMIT 10';
+
+    dashboard.query(queryTop10, (err, topResults) => {
+        if (err) throw err;
+        dashboard.query(queryBottom10, (err, bottomResults) => {
+            if (err) throw err;
+
+            // Combina los resultados
+            const combinedResults = topResults.concat(bottomResults);
+            res.json(combinedResults); // Devuelve los resultados como JSON
+        });
+    });
+});
+
+app.get('/dashboard', checkAuthenticated, (req, res) => {
+    res.render('dashboard', { user: req.session.user });
+});
 
 app.listen(3000)
 
 app.use(express.static('public'))
+app.use(express.static('./'))
 
 
