@@ -1,16 +1,7 @@
-# PROYECTO PARA EL BANCO DE ALIMENTOS DE HERMOSILLO
+# DASHBOARD SOBRE LAS CANCIONES MAS ESCUCHADAS Y MENOS ESCUCHADAS DE SPOTIFY
  
 ###  Descripción:
-Aplicación software que permita a sus usuarios capturar los datos requeridos sobre su vivienda y familia para aplicar al recibimiento de apoyo alimentario por parte de BAMX, y a los encargados del banco gestionar con mayor facilidad dichas aplicaciones al programa.
- 
-### Objetivo general:
-Desarrollar un software que haga más sencillo el proceso de aplicación al programa tanto a los aspirantes como a los encargados, mediante una plataforma en la que se puedan introducir los datos del aspirante y una base de datos en la que se almacenen para fácil acceso.
- 
-###  Objetivo específicos:
-- Desarrollar una plataforma en la que se puedan capturar los datos de acuerdo al formato de BAMX
-- Desarrollar una base de datos en la que se puedan almacenar los datos
-- Desarrollar un mapa de calor en el que se puedan visualizar las áreas con mayor densidad de apoyados
-- Permitir el sencillo y ordenado acceso a la información de los aspirantes para darlos de alta o baja
+Este un proyecto hecho con nodejs, javascript, html, css y mysql en el cual utilizamos bases de datos para generar dos graficas con chart.js que nos indique cuales canciones de nuestra base de datos son las que tienen mayor cantidad de streams y cuales tienen la menor cantidad de streams
 
 ###  Integrantes
 
@@ -40,4 +31,9 @@ Necesitas poder utilizar y manipular bases de datos dentro de tu maquina con MyS
 ### Correr la aplicacion
 Una vez que ya tengas todo listo (la base de datos iniciada en los puertos necesarios) corre en tu terminal, ubicada en la carpeta raiz del proyecto, el comando `npm run devStart` y si todo sale bien debes tener un mensaje de que estas conectado a sql
 
-Una vez que entres veras este dashboard ![Dashboard de spotify](/images/dashboard.jpeg)
+Cuando lances la aplicacion vas a ver este menu ![Login](/images/login.jpeg)
+
+Vas a tener que darle al boton de registrarse para poder crear una cuenta, cuando le des veras un menu como este ![Register](/images/register.jpeg)
+
+Una vez que inicies sesion veras este dashboard ![Dashboard de spotify](/images/dashboard.jpeg)
+
